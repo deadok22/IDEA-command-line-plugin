@@ -1,0 +1,36 @@
+<idea-plugin version="2">
+  <id>ru.spbau.deadok22.hello_world_tool_window</id>
+  <name>HelloWorldToolWindowPlugin</name>
+  <version>1.0</version>
+
+  <description><![CDATA[
+      HelloWorld plugin which uses a tool window.
+      ]]></description>
+
+  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
+  <idea-version since-build="107.105"/>
+
+  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
+
+  <project-components>
+    <!-- Add your project components here -->
+  </project-components>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <toolWindow id="HelloWorldToolWindowPlugin" anchor="right" secondary="true" factoryClass="ru.spbau.deadok22.hello_world_tool_window.HelloWorldToolWindowFactory" >
+
+    </toolWindow>
+  </extensions>
+</idea-plugin>

@@ -2,6 +2,10 @@
 *.class
 out/
 
-#idea user-specific files
-.idea/workspace.xml
-.idea/tasks.xml
+#trunk idea user-specific files
+trunk/.idea/workspace.xml
+trunk/.idea/tasks.xml
+
+#playground idea user-specific files
+playground/deadok22/experiments/.idea/workspace.xml
+playground/deadok22/experiments/.idea/tasks.xml

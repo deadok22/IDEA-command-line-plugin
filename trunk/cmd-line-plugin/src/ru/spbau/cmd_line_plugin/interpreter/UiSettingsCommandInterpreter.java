@@ -1,5 +1,6 @@
 package ru.spbau.cmd_line_plugin.interpreter;
 
+import com.intellij.ide.ui.LafManager;
 import com.intellij.ide.ui.UISettings;
 import com.intellij.openapi.actionSystem.DataContext;
 import ru.spbau.cmd_line_plugin.interfaces.Command;
@@ -41,7 +42,30 @@ public final class UiSettingsCommandInterpreter implements CommandInterpreter {
 
         @Override
         public boolean executeCommand(Command command) {
-            throw new UnsupportedOperationException("FontSettingsChanger.executeCommand() is not yet implemented");
+            if (3 != command.getTokens().length) {
+                return false;
+            }
+            if ("face".equals(command.getTokens()[1])) {
+                UISettings settings = UISettings.getInstance();
+                settings.OVERRIDE_NONIDEA_LAF_FONTS = true;
+                settings.FONT_FACE = command.getTokens()[2];
+                settings.fireUISettingsChanged();
+                LafManager.getInstance().updateUI();
+                return true;
+            }
+            if ("size".equals(command.getTokens()[1])) {
+                UISettings settings = UISettings.getInstance();
+                try {
+                    settings.OVERRIDE_NONIDEA_LAF_FONTS = true;
+                    settings.FONT_SIZE = Integer.parseInt(command.getTokens()[2]);
+                } catch (NumberFormatException nfe) {
+                    return false;
+                }
+                settings.fireUISettingsChanged();
+                LafManager.getInstance().updateUI();
+                return true;
+            }
+            throw new UnsupportedOperationException("Unknown command.");
         }
 
     }

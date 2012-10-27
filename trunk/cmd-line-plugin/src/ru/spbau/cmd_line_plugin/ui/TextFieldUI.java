@@ -1,5 +1,8 @@
 package ru.spbau.cmd_line_plugin.ui;
 
+import com.intellij.ide.DataManager;
+import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import ru.spbau.cmd_line_plugin.interfaces.CommandTextHandler;
 import ru.spbau.cmd_line_plugin.interfaces.CommandTextProvider;
 

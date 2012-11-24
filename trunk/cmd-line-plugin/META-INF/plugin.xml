@@ -31,11 +31,14 @@
 
   <actions>
     <!-- Add your actions here -->
+	  <action id="cmd_line_plugin.CommandLine" class="ru.spbau.cmd_line_plugin.CommandLineAction" text="Command Line">
+		  <add-to-group group-id="GoToMenu" anchor="first"/>
+		  <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt A"/>
+	  </action>
   </actions>
 
   <extensions defaultExtensionNs="com.intellij">
-    <toolWindow factoryClass="ru.spbau.cmd_line_plugin.CommandLineToolWindowFactory" id="ru.spbau.cmd_line_plugin" anchor="bottom" secondary="true">
 
-    </toolWindow>
- </extensions>
+   </extensions>
+
 </idea-plugin>

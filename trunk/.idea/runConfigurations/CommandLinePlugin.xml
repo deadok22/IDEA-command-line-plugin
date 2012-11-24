@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CommandLinePlugin" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+  <configuration default="false" name="CommandLinePlugin" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin" singleton="true">
     <module name="cmd-line-plugin" />
     <option name="VM_PARAMETERS" value="-Xmx256m -Xms128m -XX:MaxPermSize=128m" />
     <option name="PROGRAM_PARAMETERS" value="" />

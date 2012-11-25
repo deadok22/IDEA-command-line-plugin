@@ -19,7 +19,7 @@ public class CommandLineUI implements CommandLinePopup {
         CommandLineTextFieldUI ui = new CommandLineTextFieldUI(model, this);
         ComponentPopupBuilder popupBuilder = JBPopupFactory.getInstance()
                 .createComponentPopupBuilder(ui, ui.getPreferredFocusComponent());
-        popupBuilder.setTitle("Command line plugin");
+        popupBuilder.setTitle("Enter command:");
         popupBuilder.setFocusable(true);
         popupBuilder.setRequestFocus(true);
         popup = popupBuilder.createPopup();

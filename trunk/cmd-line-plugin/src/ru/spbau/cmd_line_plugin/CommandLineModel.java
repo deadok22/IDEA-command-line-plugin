@@ -14,7 +14,7 @@ public interface CommandLineModel {
     public Object[] getMatchingObjects(String text);
 
     @NotNull
-    public ListCellRenderer getCellRenderer(Object object);
+    public ListCellRenderer getListCellRenderer();
 
     /**
      * Returns a command that corresponds to users input.

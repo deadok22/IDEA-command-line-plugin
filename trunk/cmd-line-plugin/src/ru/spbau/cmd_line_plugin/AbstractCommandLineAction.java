@@ -14,7 +14,7 @@ public abstract class AbstractCommandLineAction {
 
     /**
      * Implementations should run command on this method call.
-     * //TODO make sure this method corresponds to IDEA threading model.
+     * Call this method via ApplicationManager.getApplication().invokeLater() only.
      */
     public abstract void performAction();
 

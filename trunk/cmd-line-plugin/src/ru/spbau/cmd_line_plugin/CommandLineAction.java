@@ -15,11 +15,8 @@ public class CommandLineAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         //TODO remove ui code from here.
         CommandLineModel model = new IdeaActionsCommandLineModel(e.getData(DataKeys.CONTEXT_COMPONENT));
-        ComponentPopupBuilder popupBuilder = JBPopupFactory.getInstance()
-                .createComponentPopupBuilder(new CommandLineTextFieldUI(model), null);
-        popupBuilder.setTitle("Command line plugin");
-        popupBuilder.createPopup().showCenteredInCurrentWindow(e.getProject());
-
+        CommandLineUI ui = new CommandLineUI(model, e.getProject());
+        ui.show();
     }
 
 }

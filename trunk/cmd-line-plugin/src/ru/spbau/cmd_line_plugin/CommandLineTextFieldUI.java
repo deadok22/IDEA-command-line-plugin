@@ -1,7 +1,10 @@
 package ru.spbau.cmd_line_plugin;
 
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.ui.components.JBTextField;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,13 +17,19 @@ import java.awt.event.KeyListener;
 public class CommandLineTextFieldUI extends JBTextField {
 
     private CommandLineModel model;
+    private CommandLinePopup popup;
 
-    public CommandLineTextFieldUI(CommandLineModel model) {
+    public CommandLineTextFieldUI(CommandLineModel model, CommandLinePopup popup) {
         super();
         this.model = model;
+        this.popup = popup;
 
         initActions();
         initUI();
+    }
+
+    public JComponent getPreferredFocusComponent() {
+        return this;
     }
 
     private void initUI() {
@@ -32,12 +41,18 @@ public class CommandLineTextFieldUI extends JBTextField {
         addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                AbstractCommandLineAction action = model.getCommandLineAction(getText());
+                final AbstractCommandLineAction action = model.getCommandLineAction(getText());
                 if (null == action) {
-                    //TODO notify user that his input is not a valid command
+                    JBPopupFactory.getInstance().createMessage("Action not found.").showUnderneathOf(popup.getComponent());
+
                 } else {
-                    //TODO close the popup
-                    action.performAction();
+                    popup.close();
+                    ApplicationManager.getApplication().invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            action.performAction();
+                        }
+                    });
                 }
             }
         });

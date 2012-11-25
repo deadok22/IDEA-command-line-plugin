@@ -115,6 +115,15 @@ public class IdeaActionsCommandLineModel implements CommandLineModel {
         return new IdeaActionCommandLineAction(text, action, context);
     }
 
+    @Override
+    public AbstractCommandLineAction getCommandLineAction(Object suggestedItem) {
+        if (suggestedItem instanceof AnAction) {
+            DataContext context = DataManager.getInstance().getDataContext(commandLineActionComponent);
+            return new IdeaActionCommandLineAction("", (AnAction) suggestedItem, context);
+        }
+        return null;
+    }
+
     class IdeaActionCommandLineAction extends AbstractCommandLineAction {
 
         private AnAction action;

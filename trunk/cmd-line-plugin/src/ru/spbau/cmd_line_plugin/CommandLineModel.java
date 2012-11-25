@@ -24,4 +24,11 @@ public interface CommandLineModel {
     @Nullable
     public AbstractCommandLineAction getCommandLineAction(String text);
 
+    /**
+     * Returns a command that corresponds to selected object (from suggestion list, for example).
+     * @param suggestedItem
+     * @return
+     */
+    public AbstractCommandLineAction getCommandLineAction(Object suggestedItem);
+
 }

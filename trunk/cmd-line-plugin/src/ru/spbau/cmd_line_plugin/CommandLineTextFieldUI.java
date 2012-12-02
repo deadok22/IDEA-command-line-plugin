@@ -94,12 +94,7 @@ public class CommandLineTextFieldUI extends JBTextField {
 
     private void performConsoleAction(final AbstractCommandLineAction action) {
         close();
-        ApplicationManager.getApplication().invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                action.performAction();
-            }
-        });
+        action.performAction();
     }
 
     private void closeSuggestionsPopup() {

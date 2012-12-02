@@ -1,5 +1,6 @@
 package ru.spbau.cmd_line_plugin.user_commands.commands;
 
+import com.intellij.openapi.actionSystem.DataContext;
 import ru.spbau.cmd_line_plugin.user_commands.UserCommand;
 
 /**
@@ -12,6 +13,11 @@ public class SetEditorFontCommand implements UserCommand {
     @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public void execute(String text, DataContext dataContext) {
+        throw new UnsupportedOperationException();
     }
 
 }

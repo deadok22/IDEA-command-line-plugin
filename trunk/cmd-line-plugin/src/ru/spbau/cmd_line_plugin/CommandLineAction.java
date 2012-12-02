@@ -11,6 +11,8 @@ public class CommandLineAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
+//        ApplicationManager.getApplication().getComponent(CommandsLoader.class).getAllCommands()
+//                .get(0).execute("", e.getDataContext());
         CommandLineModel model = new IdeaActionsCommandLineModel(e.getData(DataKeys.CONTEXT_COMPONENT));
         CommandLineUI ui = new CommandLineUI(model, e.getProject());
         ui.show();

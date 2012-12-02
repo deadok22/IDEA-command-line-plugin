@@ -14,7 +14,7 @@ public abstract class AbstractCommandLineAction {
 
     /**
      * Implementations should run command on this method call.
-     * Call this method via ApplicationManager.getApplication().invokeLater() only.
+     * Do not ever run this method on a gui thread.
      */
     public abstract void performAction();
 

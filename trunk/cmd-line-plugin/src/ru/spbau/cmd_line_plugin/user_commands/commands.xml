@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<CommandLinePlugin>
+	<UserCommands>
+		<Command>
+			<Class>
+				ru.spbau.cmd_line_plugin.user_commands.commands.SetEditorFontCommand
+			</Class>
+		</Command>
+	</UserCommands>
+</CommandLinePlugin>

@@ -23,6 +23,10 @@
 
   <application-components>
     <!-- Add your application components here -->
+
+	  <component>
+		  <implementation-class>ru.spbau.cmd_line_plugin.user_commands.CommandsLoader</implementation-class>
+	  </component>
   </application-components>
 
   <project-components>

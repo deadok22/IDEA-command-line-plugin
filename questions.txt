@@ -2,3 +2,4 @@ Questions to discuss:
 1) What is the best way to implement command-aware suggestions? (command should know what to suggest)
 2) What special suggestions are there? (classes in current project, available fonts, etc)
 3) Should we provide an api for these special suggestions?
+4) Api for other plugins

@@ -7,6 +7,7 @@ import com.intellij.openapi.editor.colors.EditorFontType;
 import org.jetbrains.annotations.NotNull;
 import ru.spbau.cmd_line_plugin.api.Command;
 import ru.spbau.cmd_line_plugin.api.CommandResultHandler;
+import ru.spbau.cmd_line_plugin.api.autocomplete.Completion;
 import ru.spbau.cmd_line_plugin.api.autocomplete.CompletionProvider;
 import ru.spbau.cmd_line_plugin.api.autocomplete.CompletionProviderFactory;
 
@@ -65,7 +66,11 @@ public class SetEditorFontCommand extends Command {
         }
         if (null != cmdText && cmdText.startsWith(NAME)) {
             String fontName = cmdText.substring(NAME.length()).trim();
-            return Font.getFont(fontName);
+            Completion[] completions = getCompletionProvider(null, null).getCompletions(fontName);
+            if (0 == completions.length) {
+                return null;
+            }
+            return (Font)completions[0].getObject();
         }
         return null;
     }

@@ -22,13 +22,14 @@ public class FontFaceCompletionProvider implements CompletionProvider {
 
     private Completion[] filterAndGetCompletions(Font[] fonts, String filter) {
         ArrayList<Completion> completions = new ArrayList<Completion>();
+        filter = filter.trim().toUpperCase();
         for (Font f : fonts) {
-            if (f.getFontName().startsWith(filter)) {
+            if (f.getFontName().toUpperCase().startsWith(filter)) {
                 completions.add(new FontFaceCompletion(f));
             }
         }
         Collections.sort(completions);
-        return (Completion[]) completions.toArray();
+        return completions.toArray(new Completion[completions.size()]);
     }
 
     private class FontFaceCompletion extends Completion {

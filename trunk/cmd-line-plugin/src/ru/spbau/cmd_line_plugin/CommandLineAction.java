@@ -17,7 +17,7 @@ public class CommandLineAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        Set<Command> commands = ApplicationManager.getApplication().getComponent(CommandsLoader.class).getAllCommands();
+        final Set<Command> commands = ApplicationManager.getApplication().getComponent(CommandsLoader.class).getAllCommands();
         JBPopupFactory.getInstance()
                 .createListPopupBuilder(new JBList(commands.toArray()))
                 .createPopup()

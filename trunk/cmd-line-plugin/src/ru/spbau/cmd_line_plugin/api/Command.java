@@ -37,8 +37,9 @@ public abstract class Command {
      * @param text - full length string which is entered to the command line.
      * @param dataContext - data context
      * @param args - arguments obtained via CompletionProviders
+     * @param resultHandler - result handler
      */
-    public abstract void execute(String text, DataContext dataContext, @NotNull Object[] args);
+    public abstract void execute(String text, DataContext dataContext, @NotNull Object[] args, CommandResultHandler resultHandler);
 
     /**
      * Returns a completion provider depending on what command text is entered

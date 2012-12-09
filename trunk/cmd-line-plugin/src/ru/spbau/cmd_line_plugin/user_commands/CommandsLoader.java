@@ -7,12 +7,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import ru.spbau.cmd_line_plugin.api.Command;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +28,13 @@ public class CommandsLoader implements ApplicationComponent {
     private static final String COMMAND_ELEMENT_NAME = "Command";
     private static final String COMMAND_CLASS_ELEMENT_NAME = "Class";
 
-    private ArrayList<UserCommand> userCommands;
+    private ArrayList<Command> userCommands;
 
     public CommandsLoader() {
     }
 
     public void initComponent() {
-        userCommands = new ArrayList<UserCommand>();
+        userCommands = new ArrayList<Command>();
         loadCommands();
     }
 
@@ -45,7 +45,7 @@ public class CommandsLoader implements ApplicationComponent {
         return "CommandsLoader";
     }
 
-    public List<UserCommand> getAllCommands() {
+    public List<Command> getAllCommands() {
         return userCommands;
     }
 
@@ -82,7 +82,7 @@ public class CommandsLoader implements ApplicationComponent {
     private void instantiateAndAddCommand(String className) {
         try {
             Class commandClass = Class.forName(className);
-            UserCommand command = (UserCommand)commandClass.newInstance();
+            Command command = (Command)commandClass.newInstance();
             userCommands.add(command);
         } catch (Exception e) {
             LOG.error("Error loading command: " + className, e);

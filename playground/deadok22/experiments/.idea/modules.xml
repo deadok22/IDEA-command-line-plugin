@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Actions/Actions.iml" filepath="$PROJECT_DIR$/Actions/Actions.iml" />
       <module fileurl="file://$PROJECT_DIR$/HelloWorldToolWindowPlugin/HelloWorldToolWindowPlugin.iml" filepath="$PROJECT_DIR$/HelloWorldToolWindowPlugin/HelloWorldToolWindowPlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyExtendablePlugin/MyExtendablePlugin.iml" filepath="$PROJECT_DIR$/MyExtendablePlugin/MyExtendablePlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyExtension/MyExtension.iml" filepath="$PROJECT_DIR$/MyExtension/MyExtension.iml" />
     </modules>
   </component>
 </project>

@@ -3,7 +3,7 @@
 	<UserCommands>
 		<Command>
 			<Class>
-				ru.spbau.cmd_line_plugin.user_commands.commands.SetEditorFontCommand
+				ru.spbau.cmd_line_plugin.commands.commands.SetEditorFontCommand
 			</Class>
 		</Command>
 	</UserCommands>

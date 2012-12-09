@@ -15,6 +15,7 @@ public class CompletionProviderFactory {
     }
 
     public static CompletionProvider getStandardCompletionProvider(Providers prov) {
+        //TODO consider storing pre-constructed instances and return 'em
         switch (prov) {
             case FONT_FACE : {
                 return new FontFaceCompletionProvider();

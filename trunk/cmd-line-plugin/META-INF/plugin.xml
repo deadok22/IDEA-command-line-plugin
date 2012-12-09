@@ -4,34 +4,18 @@
   <version>1.0</version>
 
   <description><![CDATA[
-      no description yet
+      Command line plugin with an api for other plugins.
       ]]></description>
-
-  <change-notes><![CDATA[
-      No commands supported yet.
-      ]]>
-  </change-notes>
 
   <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
   <idea-version since-build="107.105"/>
 
-  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
-
   <application-components>
     <!-- Add your application components here -->
-
 	  <component>
-		  <implementation-class>ru.spbau.cmd_line_plugin.user_commands.CommandsLoader</implementation-class>
+		  <implementation-class>ru.spbau.cmd_line_plugin.commands.CommandsLoader</implementation-class>
 	  </component>
   </application-components>
-
-  <project-components>
-    <!-- Add your project components here -->
-  </project-components>
 
   <actions>
     <!-- Add your actions here -->
@@ -41,8 +25,8 @@
 	  </action>
   </actions>
 
-  <extensions defaultExtensionNs="com.intellij">
-
-   </extensions>
+  <extensionPoints>
+	  <extensionPoint name="CommandsProvider" interface="ru.spbau.cmd_line_plugin.api.CommandLineCommandsProvider" />
+  </extensionPoints>
 
 </idea-plugin>

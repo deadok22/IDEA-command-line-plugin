@@ -1,6 +1,5 @@
-package ru.spbau.cmd_line_plugin.user_commands;
+package ru.spbau.cmd_line_plugin.commands;
 
-import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Document;
@@ -14,49 +13,34 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Author: Sergey A. Savenko
  */
-public class CommandsLoader implements ApplicationComponent {
-
+public class ReflectionCommandsLoader {
     private static final Logger LOG = Logger.getInstance(CommandsLoader.class);
 
     private static final String COMMANDS_DOC_NAME = "commands.xml";
     private static final String COMMAND_ELEMENT_NAME = "Command";
     private static final String COMMAND_CLASS_ELEMENT_NAME = "Class";
 
-    private ArrayList<Command> userCommands;
-
-    public CommandsLoader() {
+    public ReflectionCommandsLoader() {
     }
 
-    public void initComponent() {
-        userCommands = new ArrayList<Command>();
-        loadCommands();
+    public Set<Command> loadCommands() {
+        return loadAndInstantiateCommands();
     }
 
-    public void disposeComponent() {}
-
-    @NotNull
-    public String getComponentName() {
-        return "CommandsLoader";
-    }
-
-    public List<Command> getAllCommands() {
-        return userCommands;
-    }
-
-    private void loadCommands() {
+    private Set<Command> loadAndInstantiateCommands() {
         Document commandsDoc;
         try {
             commandsDoc = getCommandsDocument();
         } catch (Exception e) {
             LOG.error("Error loading " + COMMANDS_DOC_NAME, e);
-            return;
+            return Collections.EMPTY_SET;
         }
+        HashSet<Command> commands = new HashSet<Command>();
         NodeList commandElements = commandsDoc.getElementsByTagName(COMMAND_ELEMENT_NAME);
         for (int i = 0; i != commandElements.getLength(); ++i) {
             Node cmdNode = commandElements.item(i);
@@ -71,22 +55,26 @@ public class CommandsLoader implements ApplicationComponent {
                     if (null == child || Node.TEXT_NODE != child.getNodeType()) {
                         break;
                     }
-                    String className = child.getNodeValue().trim();
-                    instantiateAndAddCommand(className);
+                    Command cmd = instantiateAndAddCommand(child.getNodeValue().trim());
+                    if (null != cmd) {
+                        commands.add(cmd);
+                    }
                     break;
                 }
             }
         }
+        return commands;
     }
 
-    private void instantiateAndAddCommand(String className) {
+    private Command instantiateAndAddCommand(String className) {
         try {
             Class commandClass = Class.forName(className);
             Command command = (Command)commandClass.newInstance();
-            userCommands.add(command);
+            return command;
         } catch (Exception e) {
             LOG.error("Error loading command: " + className, e);
         }
+        return null;
     }
 
     private Document getCommandsDocument() throws ParserConfigurationException, IOException, SAXException {

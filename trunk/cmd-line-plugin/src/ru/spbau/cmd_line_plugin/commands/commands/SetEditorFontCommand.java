@@ -59,22 +59,38 @@ public class SetEditorFontCommand extends Command {
 
     @Override
     public CompletionProvider getCompletionProvider(String text, Object[] args) {
-        return CompletionProviderFactory.getStandardCompletionProvider(CompletionProviderFactory.Providers.FONT_FACE);
+        if (null != args && 1 == args.length) {
+            return null;
+        }
+        String argString = getArgumentsString(text);
+        if (null == argString || "".equals(argString)) {
+            return CompletionProviderFactory.getStandardCompletionProvider(CompletionProviderFactory.Providers.FONT_FACE);
+        }
+        return null;
     }
 
     private Font getFont(String cmdText, Object[] args) {
         if (null != args && 1 == args.length && args[0] instanceof Font) {
             return (Font)args[0];
         }
-        if (null != cmdText && cmdText.startsWith(NAME)) {
-            String fontName = cmdText.substring(NAME.length()).trim();
-            Completion[] completions = getCompletionProvider(null, null).getCompletions(fontName);
-            if (0 == completions.length) {
-                return null;
-            }
-            return (Font)completions[0].getObject();
+        String fontName = getArgumentsString(cmdText);
+        if (null == fontName || "".equals(fontName)) {
+            return null;
         }
-        return null;
+
+        Completion[] completions = getCompletionProvider(null, null).getCompletions(fontName);
+        if (0 == completions.length) {
+            return null;
+        }
+        return (Font)completions[0].getObject();
+    }
+
+    private String getArgumentsString(String fullCommandString) {
+        if (null != fullCommandString && fullCommandString.startsWith(NAME)) {
+            return fullCommandString.substring(NAME.length()).trim();
+        } else {
+            return null;
+        }
     }
 
 }

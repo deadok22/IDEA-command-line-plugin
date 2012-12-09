@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/cmd-line-plugin/cmd-line-plugin.iml" filepath="$PROJECT_DIR$/cmd-line-plugin/cmd-line-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cmd-line-test-extension/cmd-line-test-extension.iml" filepath="$PROJECT_DIR$/cmd-line-test-extension/cmd-line-test-extension.iml" />
     </modules>
   </component>
 </project>

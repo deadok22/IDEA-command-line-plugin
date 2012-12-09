@@ -66,7 +66,7 @@ public abstract class Command {
 
     @Override
     public String toString() {
-        return getName() + "\t" + getDescription() + "\t" + getHelpMessage();
+        return getName() + "; " + getDescription() + "; " + getHelpMessage();
     }
 
 }

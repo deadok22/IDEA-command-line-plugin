@@ -1,0 +1,37 @@
+<idea-plugin version="2">
+  <id>ru.spbau.cmd_line_plugin_extension</id>
+  <name>Test Command Line Plugin Extension</name>
+  <version>1.0</version>
+
+  <description><![CDATA[
+      Extension for command line plugin implemented using extension points mechanism
+      ]]></description>
+
+  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
+  <idea-version since-build="107.105"/>
+
+  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <depends>ru.spbau.cmd_line_plugin</depends>
+
+
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
+
+  <project-components>
+    <!-- Add your project components here -->
+  </project-components>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+  <extensions defaultExtensionNs="ru.spbau.cmd_line_plugin">
+    <CommandsProvider implementation="ru.spbau.cmd_line_plugin_extension.HelloWorldExtension"></CommandsProvider>
+  </extensions>
+</idea-plugin>

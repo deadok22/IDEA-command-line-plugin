@@ -1,8 +1,10 @@
 package ru.spbau.cmd_line_plugin;
 
+import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
@@ -15,6 +17,7 @@ import ru.spbau.cmd_line_plugin.commands.CommandsLoader;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.util.Set;
 
 /**
@@ -29,7 +32,7 @@ public class CommandLineAction extends AnAction {
         cmdList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JBPopupFactory.getInstance()
                 .createListPopupBuilder(cmdList)
-                .setItemChoosenCallback(new ActionChoosenCallback(cmdList, e.getDataContext()))
+                .setItemChoosenCallback(new ActionChoosenCallback(cmdList, e.getData(DataKeys.CONTEXT_COMPONENT)))
                 .createPopup()
                 .showCenteredInCurrentWindow(e.getProject());
     }
@@ -37,17 +40,17 @@ public class CommandLineAction extends AnAction {
     private class ActionChoosenCallback implements Runnable {
 
         private JBList cmdList;
-        private DataContext dataContext;
+        private Component contextComponent;
 
-        public ActionChoosenCallback(JBList cmdList, DataContext dc) {
+        public ActionChoosenCallback(JBList cmdList, Component contextComponent) {
             this.cmdList = cmdList;
-            this.dataContext = dc;
+            this.contextComponent = contextComponent;
         }
 
         @Override
         public void run() {
             Command cmd = (Command)cmdList.getModel().getElementAt(cmdList.getSelectedIndex());
-            cmd.execute(cmd.getName() + " CMD_ARG", dataContext, new Object[0], new CommandResultHandler() {
+            cmd.execute(cmd.getName() + " CMD_ARG", contextComponent, new Object[0], new CommandResultHandler() {
                 @Override
                 public void handleResult(Command cmd, boolean isOk, @Nullable String message) {
                     JBPopupFactory.getInstance()

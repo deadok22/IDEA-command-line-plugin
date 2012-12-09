@@ -1,5 +1,6 @@
 package ru.spbau.cmd_line_plugin_extension;
 
+import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
@@ -53,7 +54,8 @@ public class HelloWorldExtension implements CommandLineCommandsProvider {
         }
 
         @Override
-        public void execute(String text, DataContext dataContext, @NotNull Object[] args, CommandResultHandler resultHandler) {
+        public void execute(String text, Component contextComponent, @NotNull Object[] args, CommandResultHandler resultHandler) {
+            DataContext dataContext = DataManager.getInstance().getDataContext(contextComponent);
             if (!text.startsWith(NAME)) {
                 resultHandler.handleResult(this, false, "wrong command text");
                 return;

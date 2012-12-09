@@ -1,8 +1,9 @@
 package ru.spbau.cmd_line_plugin.api;
 
-import com.intellij.openapi.actionSystem.DataContext;
 import org.jetbrains.annotations.NotNull;
 import ru.spbau.cmd_line_plugin.api.autocomplete.CompletionProvider;
+
+import java.awt.*;
 
 /**
  * Represents a command line command.
@@ -35,11 +36,11 @@ public abstract class Command {
     /**
      * Executes command.
      * @param text - full length string which is entered to the command line.
-     * @param dataContext - data context
+     * @param contextComponent - context component (component on which CommandLineAction occurred)
      * @param args - arguments obtained via CompletionProviders
      * @param resultHandler - result handler
      */
-    public abstract void execute(String text, DataContext dataContext, @NotNull Object[] args, CommandResultHandler resultHandler);
+    public abstract void execute(String text, Component contextComponent, @NotNull Object[] args, CommandResultHandler resultHandler);
 
     /**
      * Returns a completion provider depending on what command text is entered

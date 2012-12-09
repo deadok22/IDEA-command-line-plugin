@@ -1,5 +1,6 @@
 package ru.spbau.cmd_line_plugin.commands.commands;
 
+import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.editor.Editor;
@@ -40,7 +41,8 @@ public class SetEditorFontCommand extends Command {
     }
 
     @Override
-    public void execute(String text, DataContext dataContext, @NotNull Object[] args, CommandResultHandler resultHandler) {
+    public void execute(String text, Component contextComponent, @NotNull Object[] args, CommandResultHandler resultHandler) {
+        DataContext dataContext = DataManager.getInstance().getDataContext(contextComponent);
         Font font = getFont(text, args);
         if (null == font) {
             resultHandler.handleResult(this, false, "No font specified");

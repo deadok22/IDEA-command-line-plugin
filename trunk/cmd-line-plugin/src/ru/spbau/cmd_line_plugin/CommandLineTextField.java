@@ -58,7 +58,9 @@ public class CommandLineTextField extends JBTextField {
             @Override
             public void keyTyped(KeyEvent e) {
                 if (e.getKeyChar()==KeyEvent.VK_BACK_SPACE){
-                    currentText = currentText.substring(0, currentText.length()-1);
+                    if (!currentText.isEmpty()) {
+                        currentText = currentText.substring(0, currentText.length()-1);
+                    }
                 } else {
                     currentText += e.getKeyChar();
                 }
@@ -84,15 +86,6 @@ public class CommandLineTextField extends JBTextField {
                           command.execute(getText(), contextComponent, new Object[0], null);
                       }
                   }
-//                CommandLineAction action = model.getCommandLineAction(getText());
-//                if (null == action && null != suggestionsList) {
-//                    action = model.getCommandLineAction(suggestionsList.getSelectedValue());
-//                }
-//                if (null == action) {
-//                    JBPopupFactory.getInstance().createMessage("Action not found.").showUnderneathOf(popup.getComponent());
-//                } else {
-//                    performConsoleAction(action);
-//                }
             }
         });
     }
@@ -110,16 +103,6 @@ public class CommandLineTextField extends JBTextField {
         suggestionsPopup = builder.createPopup();
         suggestionsPopup.showUnderneathOf(popup.getComponent());
     }
-
-//    private void performConsoleAction(final AbstractCommandLineAction action) {
-//        close();
-//        ApplicationManager.getApplication().invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                action.performAction();
-//            }
-//        });
-//    }
 
     private void closeSuggestionsPopup() {
         if (null != suggestionsPopup) {

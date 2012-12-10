@@ -22,11 +22,13 @@ public class CommandLineTextField extends JBTextField {
     private JBList suggestionsList;
     private Set<Command> commands;
     private String currentText;
+    private Component contextComponent;
 
-    public CommandLineTextField(Set<Command> commands, CommandLinePopup popup) {
+    public CommandLineTextField(Set<Command> commands, CommandLinePopup popup, Component contextComponent) {
         super();
         this.popup = popup;
         this.commands = commands;
+        this.contextComponent = contextComponent;
         initActions();
         initUI();
         currentText = "";
@@ -71,12 +73,15 @@ public class CommandLineTextField extends JBTextField {
             public void keyReleased(KeyEvent e) {
             }
         });
+
+
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                   for(Command command : commands) {
-                      if (command.getName().equals(getText())) {
-                          System.out.println(getText());
+                      if (getText().startsWith(command.getName())) {
+                          System.out.println("EXEC");
+                          command.execute(getText(), contextComponent, new Object[0], null);
                       }
                   }
 //                CommandLineAction action = model.getCommandLineAction(getText());

@@ -2,6 +2,7 @@ package ru.spbau.cmd_line_plugin;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.ui.components.JBList;
@@ -21,7 +22,7 @@ public class CommandLineAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         final Set<Command> commands = ApplicationManager.getApplication().getComponent(CommandsLoader.class).getAllCommands();
-        CommandLineUI ui = new CommandLineUI(commands, e.getProject());
+        CommandLineUI ui = new CommandLineUI(commands, e.getProject(), e.getData(DataKeys.CONTEXT_COMPONENT));
         ui.show();
 //        final Set<Command> commands = ApplicationManager.getApplication().getComponent(CommandsLoader.class).getAllCommands();
 //        JBList cmdList = new JBList(commands.toArray());

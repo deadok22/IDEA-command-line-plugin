@@ -19,8 +19,8 @@ public class CommandLineUI implements CommandLinePopup {
     private JBPopup popup;
     private Project project;
 
-    public CommandLineUI(Set<Command> commands, Project project) {
-        CommandLineTextField textField = new CommandLineTextField(commands, this);
+    public CommandLineUI(Set<Command> commands, Project project, Component contextComponent) {
+        CommandLineTextField textField = new CommandLineTextField(commands, this, contextComponent);
         ComponentPopupBuilder popupBuilder = JBPopupFactory.getInstance()
                 .createComponentPopupBuilder(textField, textField.getPreferredFocusComponent());
         popupBuilder.setTitle("Enter command:");
@@ -29,7 +29,6 @@ public class CommandLineUI implements CommandLinePopup {
         popup = popupBuilder.createPopup();
         this.project = project;
     }
-
 
     public void show() {
         popup.showCenteredInCurrentWindow(project);

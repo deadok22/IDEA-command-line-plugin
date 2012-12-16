@@ -5,7 +5,9 @@ import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBTextField;
+import org.jetbrains.annotations.Nullable;
 import ru.spbau.cmd_line_plugin.api.Command;
+import ru.spbau.cmd_line_plugin.api.CommandResultHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -82,8 +84,12 @@ public class CommandLineTextField extends JBTextField {
             public void actionPerformed(ActionEvent e) {
                   for(Command command : commands) {
                       if (getText().startsWith(command.getName())) {
-                          System.out.println("EXEC");
-                          command.execute(getText(), contextComponent, new Object[0], null);
+                          //TODO replace new CommandResultHandler() with real implementation.
+                          command.execute(getText(), contextComponent, new Object[0], new CommandResultHandler() {
+                              @Override
+                              public void handleResult(Command cmd, boolean isOk, @Nullable String message) {
+                              }
+                          });
                       }
                   }
             }

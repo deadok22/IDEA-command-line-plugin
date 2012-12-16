@@ -12,7 +12,8 @@ import ru.spbau.cmd_line_plugin.api.CommandResultHandler;
 import ru.spbau.cmd_line_plugin.api.autocomplete.CompletionProvider;
 import ru.spbau.cmd_line_plugin.api.autocomplete.CompletionProviderFactory;
 
-import java.awt.*;
+import java.awt.Component;
+import java.util.List;
 
 /**
  * Author: Sergey A. Savenko
@@ -48,8 +49,13 @@ public class ToggleBreakpointsEnabledCommand extends Command {
             resultHandler.handleResult(this, false, "Project not found");
         }
         BreakpointManager breakpointManager = DebuggerManagerEx.getInstanceEx(project).getBreakpointManager();
-        for (Breakpoint bp : breakpointManager.getBreakpoints()) {
-            breakpointManager.setBreakpointEnabled(bp, !bp.ENABLED);
+        List<Breakpoint> bps = breakpointManager.getBreakpoints();
+        boolean enable = false;
+        if (!bps.isEmpty()) {
+            enable = !bps.get(0).ENABLED;
+        }
+        for (Breakpoint bp : bps) {
+            breakpointManager.setBreakpointEnabled(bp, enable);
         }
         resultHandler.handleResult(this, true, null);
     }

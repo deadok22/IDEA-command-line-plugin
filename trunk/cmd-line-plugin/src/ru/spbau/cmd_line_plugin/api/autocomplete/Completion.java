@@ -26,4 +26,9 @@ public abstract class Completion implements Comparable<Completion> {
     public int compareTo(Completion o) {
         return this.getText().compareTo(null == o ? "" : o.getText());
     }
+
+    @Override
+    public String toString() {
+        return getText();
+    }
 }

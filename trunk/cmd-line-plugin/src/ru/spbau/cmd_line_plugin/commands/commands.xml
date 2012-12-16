@@ -11,5 +11,10 @@
 				ru.spbau.cmd_line_plugin.commands.commands.ToggleBreakpointsEnabledCommand
 			</Class>
 		</Command>
+		<Command>
+			<Class>
+				ru.spbau.cmd_line_plugin.commands.commands.ShowLineNumbersCommand
+			</Class>
+		</Command>
 	</UserCommands>
 </CommandLinePlugin>

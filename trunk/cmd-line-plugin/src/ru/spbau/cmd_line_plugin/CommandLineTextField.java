@@ -7,7 +7,6 @@ import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.ui.popup.JBPopup;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
-import com.intellij.ui.awt.RelativePoint;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBTextField;
@@ -32,6 +31,7 @@ public class CommandLineTextField extends JBTextField {
     private Set<Command> commands;
     private String currentText;
     private Component contextComponent;
+    private Command currentCommand;
 
     public CommandLineTextField(Set<Command> commands, CommandLinePopup popup, Component contextComponent) {
         super();
@@ -41,6 +41,7 @@ public class CommandLineTextField extends JBTextField {
         initActions();
         initUI();
         currentText = "";
+        currentCommand = null;
     }
 
     private ArrayList<Command> getSuggestedCommands(String s) {
@@ -62,16 +63,17 @@ public class CommandLineTextField extends JBTextField {
     }
 
     private void initActions() {
-
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
                 if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
                     if (!currentText.isEmpty()) {
                         currentText = currentText.substring(0, currentText.length() - 1);
+                        currentCommand = null;
                     }
                 } else if (e.getKeyChar()!=KeyEvent.VK_ENTER) {
                     currentText += e.getKeyChar();
+                    currentCommand = null;
                 }
                 updateSuggestions();
             }
@@ -79,7 +81,7 @@ public class CommandLineTextField extends JBTextField {
             @Override
             public void keyPressed(KeyEvent e) {
                 System.out.println(e.getKeyChar()+": "+currentText);
-                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                if (e.getKeyCode()==KeyEvent.VK_DOWN) {
                     suggestionsList.setSelectedIndex(suggestionsList.getSelectedIndex() + 1);
                 } else if (e.getKeyCode() == KeyEvent.VK_UP) {
                     suggestionsList.setSelectedIndex(suggestionsList.getSelectedIndex() - 1);
@@ -107,14 +109,12 @@ public class CommandLineTextField extends JBTextField {
                                 if (message != null && !message.isEmpty()) {
                                     echoText += "\nMessage: " + message;
                                 }
-                                RelativePoint p = new RelativePoint(suggestionsList.location());
                                 JBPopupFactory.getInstance()
                                         .createBalloonBuilder(new JBLabel(echoText))
                                         .setFillColor(isOk ? Color.GREEN : Color.RED)
                                         .setTitle("ECHO")
                                         .createBalloon()
                                         .showInCenterOf(suggestionsPopup.getContent());
-                                // .show(p, Balloon.Position.atRight);
                             }
                         });
                     }
@@ -123,9 +123,20 @@ public class CommandLineTextField extends JBTextField {
                     Command c = (Command)suggestionsList.getSelectedValue();
                     setText(c.getName());
                     currentText = getText();
+                    currentCommand = c;
+                    autoComplete();
                 }
             }
         });
+    }
+
+    private void autoComplete() {
+        suggestionsList = new JBList(new ArrayList<Command> ());
+        PopupChooserBuilder builder = JBPopupFactory.getInstance().createListPopupBuilder(suggestionsList);
+        builder.setMinSize(getSize());
+        builder.setRequestFocus(false);
+        suggestionsPopup = builder.createPopup();
+        suggestionsPopup.showUnderneathOf(popup.getComponent());
     }
 
     private void updateSuggestions() {
@@ -154,5 +165,4 @@ public class CommandLineTextField extends JBTextField {
         closeSuggestionsPopup();
         popup.close();
     }
-
 }

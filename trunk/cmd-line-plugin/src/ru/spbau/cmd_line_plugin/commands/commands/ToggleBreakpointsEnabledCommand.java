@@ -61,7 +61,7 @@ public class ToggleBreakpointsEnabledCommand extends Command {
     }
 
     @Override
-    public CompletionProvider getCompletionProvider(String text, Object[] args) {
+    public CompletionProvider getCompletionProvider(String text, Object[] args, Component contextComponent) {
         return CompletionProviderFactory.getStandardCompletionProvider(null);
     }
 }

@@ -47,9 +47,10 @@ public abstract class Command {
      * and arguments selected from CompletionProviders.
      * @param text - full length string which is entered to the command line.
      * @param args - arguments obtained via previous CompletionProviders
+     * @param contextComponent - context component (component on which CommandLineAction occurred)
      * @return
      */
-    public abstract CompletionProvider getCompletionProvider(String text, Object[] args);
+    public abstract CompletionProvider getCompletionProvider(String text, Object[] args, Component contextComponent);
 
     @Override
     public int hashCode() {
@@ -68,6 +69,14 @@ public abstract class Command {
     @Override
     public String toString() {
         return getName() + "; " + getDescription() + "; " + getHelpMessage();
+    }
+
+    protected String getArgumentsString(String fullCommandString) {
+        if (null != fullCommandString && fullCommandString.startsWith(getName())) {
+            return fullCommandString.substring(getName().length()).trim();
+        } else {
+            return null;
+        }
     }
 
 }

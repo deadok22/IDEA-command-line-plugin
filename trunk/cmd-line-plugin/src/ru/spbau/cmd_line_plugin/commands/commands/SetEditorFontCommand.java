@@ -58,7 +58,7 @@ public class SetEditorFontCommand extends Command {
     }
 
     @Override
-    public CompletionProvider getCompletionProvider(String text, Object[] args) {
+    public CompletionProvider getCompletionProvider(String text, Object[] args, Component contextComponent) {
         if (null != args && 1 == args.length) {
             return null;
         }
@@ -78,19 +78,11 @@ public class SetEditorFontCommand extends Command {
             return null;
         }
 
-        Completion[] completions = getCompletionProvider(null, null).getCompletions(fontName);
+        Completion[] completions = getCompletionProvider(null, null, null).getCompletions(fontName);
         if (0 == completions.length) {
             return null;
         }
         return (Font)completions[0].getObject();
-    }
-
-    private String getArgumentsString(String fullCommandString) {
-        if (null != fullCommandString && fullCommandString.startsWith(NAME)) {
-            return fullCommandString.substring(NAME.length()).trim();
-        } else {
-            return null;
-        }
     }
 
 }

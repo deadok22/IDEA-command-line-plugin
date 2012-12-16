@@ -71,7 +71,7 @@ public class HelloWorldExtension implements CommandLineCommandsProvider {
         }
 
         @Override
-        public CompletionProvider getCompletionProvider(String text, Object[] args) {
+        public CompletionProvider getCompletionProvider(String text, Object[] args, Component contextComponent) {
             return CompletionProviderFactory.getStandardCompletionProvider(null);
         }
     }

@@ -75,6 +75,11 @@ public class CommandLineTextField extends JBTextField {
 
             @Override
             public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode()==KeyEvent.VK_DOWN) {
+                    suggestionsList.setSelectedIndex(suggestionsList.getSelectedIndex()+1);
+                } else if (e.getKeyCode()==KeyEvent.VK_UP) {
+                    suggestionsList.setSelectedIndex(suggestionsList.getSelectedIndex()-1);
+                }
             }
 
             @Override

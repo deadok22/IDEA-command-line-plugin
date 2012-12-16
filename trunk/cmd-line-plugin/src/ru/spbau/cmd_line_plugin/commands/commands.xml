@@ -16,5 +16,10 @@
 				ru.spbau.cmd_line_plugin.commands.commands.ShowLineNumbersCommand
 			</Class>
 		</Command>
+		<Command>
+			<Class>
+				ru.spbau.cmd_line_plugin.commands.commands.InstallPluginCommand
+			</Class>
+		</Command>
 	</UserCommands>
 </CommandLinePlugin>

@@ -6,5 +6,10 @@
 				ru.spbau.cmd_line_plugin.commands.commands.SetEditorFontCommand
 			</Class>
 		</Command>
+		<Command>
+			<Class>
+				ru.spbau.cmd_line_plugin.commands.commands.ToggleBreakpointsEnabledCommand
+			</Class>
+		</Command>
 	</UserCommands>
 </CommandLinePlugin>

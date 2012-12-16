@@ -40,7 +40,7 @@ public abstract class Command {
      * @param args - arguments obtained via CompletionProviders
      * @param resultHandler - result handler
      */
-    public abstract void execute(String text, Component contextComponent, @NotNull Object[] args, CommandResultHandler resultHandler);
+    public abstract void execute(String text, Component contextComponent, @NotNull Object[] args, @NotNull CommandResultHandler resultHandler);
 
     /**
      * Returns a completion provider depending on what command text is entered

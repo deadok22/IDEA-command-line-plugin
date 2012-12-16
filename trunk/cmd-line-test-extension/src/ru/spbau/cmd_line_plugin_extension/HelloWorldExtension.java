@@ -54,7 +54,7 @@ public class HelloWorldExtension implements CommandLineCommandsProvider {
         }
 
         @Override
-        public void execute(String text, Component contextComponent, @NotNull Object[] args, CommandResultHandler resultHandler) {
+        public void execute(String text, Component contextComponent, @NotNull Object[] args, @NotNull CommandResultHandler resultHandler) {
             DataContext dataContext = DataManager.getInstance().getDataContext(contextComponent);
             if (!text.startsWith(NAME)) {
                 resultHandler.handleResult(this, false, "wrong command text");

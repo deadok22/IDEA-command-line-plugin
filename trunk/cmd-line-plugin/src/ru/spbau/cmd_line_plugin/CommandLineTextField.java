@@ -1,8 +1,12 @@
 package ru.spbau.cmd_line_plugin;
 
+import com.intellij.ide.DataManager;
+import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.ui.popup.JBPopup;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
+import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBTextField;
 import org.jetbrains.annotations.Nullable;
@@ -78,7 +82,6 @@ public class CommandLineTextField extends JBTextField {
             }
         });
 
-
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -88,6 +91,17 @@ public class CommandLineTextField extends JBTextField {
                           command.execute(getText(), contextComponent, new Object[0], new CommandResultHandler() {
                               @Override
                               public void handleResult(Command cmd, boolean isOk, @Nullable String message) {
+                                  DataContext dataContext = DataManager.getInstance().getDataContext(contextComponent);
+                                  String echoText = "Command "+cmd.getName()+"finished " + (isOk ? "correctly" : "incorrectly");
+                                  if (message!=null && !message.isEmpty()) {
+                                      echoText += "\nMessage: "+message;
+                                  }
+                                  JBPopupFactory.getInstance()
+                                          .createBalloonBuilder(new JBLabel(echoText))
+                                          .setFillColor(isOk ? Color.GREEN : Color.RED)
+                                          .setTitle("ECHO")
+                                          .createBalloon()
+                                          .showInCenterOf(DataKeys.EDITOR.getData(dataContext).getComponent());
                               }
                           });
                       }

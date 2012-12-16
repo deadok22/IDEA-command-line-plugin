@@ -3,9 +3,11 @@ package ru.spbau.cmd_line_plugin;
 import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.actionSystem.DataKeys;
+import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.ui.popup.JBPopup;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
+import com.intellij.ui.awt.RelativePoint;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBTextField;
@@ -18,6 +20,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Set;
+
 /**
  * Author: Pavel Chadnov
  */
@@ -63,11 +66,11 @@ public class CommandLineTextField extends JBTextField {
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if (e.getKeyChar()==KeyEvent.VK_BACK_SPACE){
+                if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
                     if (!currentText.isEmpty()) {
-                        currentText = currentText.substring(0, currentText.length()-1);
+                        currentText = currentText.substring(0, currentText.length() - 1);
                     }
-                } else {
+                } else if (e.getKeyChar()!=KeyEvent.VK_ENTER) {
                     currentText += e.getKeyChar();
                 }
                 updateSuggestions();
@@ -75,6 +78,12 @@ public class CommandLineTextField extends JBTextField {
 
             @Override
             public void keyPressed(KeyEvent e) {
+                System.out.println(e.getKeyChar()+": "+currentText);
+                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    suggestionsList.setSelectedIndex(suggestionsList.getSelectedIndex() + 1);
+                } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    suggestionsList.setSelectedIndex(suggestionsList.getSelectedIndex() - 1);
+                }
             }
 
             @Override
@@ -85,27 +94,36 @@ public class CommandLineTextField extends JBTextField {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                  for(Command command : commands) {
-                      if (getText().startsWith(command.getName())) {
-                          //TODO replace new CommandResultHandler() with real implementation.
-                          command.execute(getText(), contextComponent, new Object[0], new CommandResultHandler() {
-                              @Override
-                              public void handleResult(Command cmd, boolean isOk, @Nullable String message) {
-                                  DataContext dataContext = DataManager.getInstance().getDataContext(contextComponent);
-                                  String echoText = "Command "+cmd.getName()+"finished " + (isOk ? "correctly" : "incorrectly");
-                                  if (message!=null && !message.isEmpty()) {
-                                      echoText += "\nMessage: "+message;
-                                  }
-                                  JBPopupFactory.getInstance()
-                                          .createBalloonBuilder(new JBLabel(echoText))
-                                          .setFillColor(isOk ? Color.GREEN : Color.RED)
-                                          .setTitle("ECHO")
-                                          .createBalloon()
-                                          .showInCenterOf(DataKeys.EDITOR.getData(dataContext).getComponent());
-                              }
-                          });
-                      }
-                  }
+                boolean found = false;
+
+                for (Command command : commands) {
+                    if (getText().startsWith(command.getName())) {
+                        found = true;
+                        command.execute(getText(), contextComponent, new Object[0], new CommandResultHandler() {
+                            @Override
+                            public void handleResult(Command cmd, boolean isOk, @Nullable String message) {
+                                DataContext dataContext = DataManager.getInstance().getDataContext(contextComponent);
+                                String echoText = "Command " + cmd.getName() + " finished " + (isOk ? "correctly" : "incorrectly");
+                                if (message != null && !message.isEmpty()) {
+                                    echoText += "\nMessage: " + message;
+                                }
+                                RelativePoint p = new RelativePoint(suggestionsList.location());
+                                JBPopupFactory.getInstance()
+                                        .createBalloonBuilder(new JBLabel(echoText))
+                                        .setFillColor(isOk ? Color.GREEN : Color.RED)
+                                        .setTitle("ECHO")
+                                        .createBalloon()
+                                        .showInCenterOf(suggestionsPopup.getContent());
+                                // .show(p, Balloon.Position.atRight);
+                            }
+                        });
+                    }
+                }
+                if (!found) {
+                    Command c = (Command)suggestionsList.getSelectedValue();
+                    setText(c.getName());
+                    currentText = getText();
+                }
             }
         });
     }
@@ -113,10 +131,10 @@ public class CommandLineTextField extends JBTextField {
     private void updateSuggestions() {
         closeSuggestionsPopup();
         ArrayList<Command> matchingCommands = getSuggestedCommands(currentText);
-        suggestionsList = new JBList(matchingCommands);
-        if (suggestionsList.isEmpty()) {
+        if (matchingCommands.isEmpty()) {
             return;
         }
+        suggestionsList = new JBList(matchingCommands);
         PopupChooserBuilder builder = JBPopupFactory.getInstance().createListPopupBuilder(suggestionsList);
         builder.setMinSize(getSize());
         builder.setRequestFocus(false);

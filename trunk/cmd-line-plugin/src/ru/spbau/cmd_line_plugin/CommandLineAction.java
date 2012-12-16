@@ -24,14 +24,6 @@ public class CommandLineAction extends AnAction {
         final Set<Command> commands = ApplicationManager.getApplication().getComponent(CommandsLoader.class).getAllCommands();
         CommandLineUI ui = new CommandLineUI(commands, e.getProject(), e.getData(DataKeys.CONTEXT_COMPONENT));
         ui.show();
-//        final Set<Command> commands = ApplicationManager.getApplication().getComponent(CommandsLoader.class).getAllCommands();
-//        JBList cmdList = new JBList(commands.toArray());
-//        cmdList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//        JBPopupFactory.getInstance()
-//                .createListPopupBuilder(cmdList)
-//                .setItemChoosenCallback(new ActionChoosenCallback(cmdList, e.getData(DataKeys.CONTEXT_COMPONENT)))
-//                .createPopup()
-//                .showCenteredInCurrentWindow(e.getProject());
     }
 
     private class ActionChoosenCallback implements Runnable {

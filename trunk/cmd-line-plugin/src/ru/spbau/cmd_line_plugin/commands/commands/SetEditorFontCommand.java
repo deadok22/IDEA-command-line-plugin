@@ -53,7 +53,8 @@ public class SetEditorFontCommand extends Command {
             resultHandler.handleResult(this, false, "No editor opened");
             return;
         }
-        editor.getColorsScheme().setFont(EditorFontType.PLAIN, font);
+        //editor.getColorsScheme().setFont(EditorFontType.PLAIN, font);
+        editor.getColorsScheme().setEditorFontName(font.getFontName());//.setFont(EditorFontType.PLAIN, font);
         resultHandler.handleResult(this, true, null);
     }
 

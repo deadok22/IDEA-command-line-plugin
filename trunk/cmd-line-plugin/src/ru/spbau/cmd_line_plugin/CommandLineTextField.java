@@ -211,8 +211,9 @@ public class CommandLineTextField extends JBTextField {
 
     ArrayList<Completion> getSuggestedParams(String s) {
         ArrayList<Completion> ret = new ArrayList<Completion>();
-        for (Completion t : completionProvider.getCompletions(s))
-            ret.add(t);
+        if (completionProvider!=null)
+            for (Completion t : completionProvider.getCompletions(s))
+                ret.add(t);
         return ret;
     }
 

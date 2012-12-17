@@ -14,7 +14,7 @@ public class BooleanCompletionProvider implements CompletionProvider {
         if (null == s || s.isEmpty()) {
             return new Completion[] {BooleanCompletion.TRUE_COMPLETION, BooleanCompletion.FALSE_COMPLETION};
         }
-        String lowerCased = s.toLowerCase();
+        String lowerCased = s.trim().toLowerCase();
         if (Boolean.TRUE.toString().startsWith(lowerCased)) {
             return new Completion[] {BooleanCompletion.TRUE_COMPLETION};
         } else if (Boolean.FALSE.toString().startsWith(lowerCased)) {

@@ -85,12 +85,12 @@ public class CommandLineTextField extends JBTextField {
                 if (message != null && !message.isEmpty()) {
                     echoText += "\nMessage: " + message;
                 }
-                JBPopupFactory.getInstance()
-                        .createBalloonBuilder(new JBLabel(echoText))
-                        .setFillColor(isOk ? Color.GREEN : Color.RED)
-                        .setTitle("ECHO")
-                        .createBalloon()
-                        .showInCenterOf(suggestionsPopup.getContent());
+//                JBPopupFactory.getInstance()
+//                        .createBalloonBuilder(new JBLabel(echoText))
+//                        .setFillColor(isOk ? Color.GREEN : Color.RED)
+//                        .setTitle("ECHO")
+//                        .createBalloon()
+//                        .showInCenterOf(suggestionsPopup.getContent());
                 closeSuggestionsPopup();
             }
         });
@@ -188,7 +188,7 @@ public class CommandLineTextField extends JBTextField {
                     }
 
                 } else {
-                    if (suggestionsList.getSelectedValue() == null) {
+                    if (null == suggestionsList || suggestionsList.getSelectedValue() == null) {
                         exec();
                         closeSuggestionsPopup();
                         return;

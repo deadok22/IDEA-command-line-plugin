@@ -48,7 +48,7 @@ public class SetEditorFontCommand extends Command {
             resultHandler.handleResult(this, false, "No font specified");
             return;
         }
-        Editor editor = DataKeys.EDITOR_EVEN_IF_INACTIVE.getData(dataContext);
+        Editor editor = DataKeys.EDITOR.getData(dataContext);
         if (null == editor) {
             resultHandler.handleResult(this, false, "No editor opened");
             return;
